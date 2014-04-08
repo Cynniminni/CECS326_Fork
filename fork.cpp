@@ -3,6 +3,8 @@
 #include <string>
 #include <cstdlib>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 using namespace std;
 
@@ -13,23 +15,44 @@ int main() {
 	//Initialize
 	string input = "";
 	ifstream file ("text.txt");
-	int result = 0;
+	int result = 1;
+	long childPID;
 
 	//Prompt user
-	cout << "Input is case-sensitive. Enter \'!wq\' to exit." << endl;
-	cout << "Please enter string to search:" << endl;
-	cin >> input;
+	cout << "[" << getppid() << "]: Input is case-sensitive. Enter \'!wq\' to exit." << endl;
 
-	//While user hasn't terminated the program
-	while (input != "!wq") {
-		//Search text file
-		result = searchText(file, input);
-		cout << "\n\"" << input << "\" occurs " << result << " times." << endl;
+	while (result > 0) {
+		cout << "[" << getppid() << "]: Please enter string to search:" << endl;
+		cin >> input;
 
-		cout << "\nInput is case-sensitive. Enter \'!wq\' to exit." << endl;
-		cout << "Please enter string to search:" << endl;
-		cin >> input;	
+		if (input != "!wq") {
+			childPID = fork();//spawn child
+			
+			if (childPID == 0) {
+				//child executes
+				result = searchText(file, input);
+				cout << "\n[" << getppid() 
+				<< "]: " << input << "\' occurs " << result << " times." << endl;
+
+				if (result == 0) {
+					cout << "[" << getppid() << "]: ";
+					while (result == 0) {
+						cout << ".";
+					}
+				}
+
+			} else {
+				//parent executes
+				wait(0);//wait for child to die ahhaha
+				result = 0;
+				cout << "\n[" << getppid() << "]: Result = " << result << endl;
+			}
+		} else {
+			break;
+		}
 	}
+
+	cout << "[" << getppid() << "]: Ending." << endl;
 
 	//Close file when done
 	file.close();
