@@ -3,7 +3,6 @@ Objectives: Creation and inheritance of child processes with fork and wait
 Implement a string search software to identify the number of times some given string can 
 be found in a plain text document.
 Software components:
-
 The UI program is the interface with the user. Prompt your user to enter the string to 
 be searched in some document. Here, spawn a child process to perform the search. 
 Allow the child process to finish and output its search result (if any), before 
