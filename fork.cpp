@@ -19,10 +19,10 @@ int main() {
 	long childPID;
 
 	//Prompt user
-	cout << "[" << getppid() << "]: Input is case-sensitive. Enter \'!wq\' to exit." << endl;
+	cout << "[" << getpid() << "]: Input is case-sensitive. Enter \'!wq\' to exit." << endl;
 
 	while (result > 0) {
-		cout << "[" << getppid() << "]: Please enter string to search:" << endl;
+		cout << "[" << getpid() << "]: Please enter string to search:" << endl;
 		cin >> input;
 
 		if (input != "!wq") {
@@ -31,29 +31,28 @@ int main() {
 			if (childPID == 0) {
 				//child executes
 				result = searchText(file, input);
-				cout << "\n[" << getppid() 
+				cout << "\n[" << getpid() 
 				<< "]: " << input << "\' occurs " << result << " times." << endl;
-
-				if (result == 0) {
-					cout << "[" << getppid() << "]: ";
-					while (result == 0) {
-						cout << ".";
-					}
+				
+				while (result == 0) {//bug
+					//result = searchText(file, input);
+					cout << ".";
 				}
+		
+				break;
 
 			} else {
 				//parent executes
 				wait(0);//wait for child to die ahhaha
-				result = 0;
-				cout << "\n[" << getppid() << "]: Result = " << result << endl;
+				
 			}
 		} else {
+			result = 0;
 			break;
 		}
 	}
-
-	cout << "[" << getppid() << "]: Ending." << endl;
-
+	
+	cout << "[" << getpid() << "]: Ending." << endl;
 	//Close file when done
 	file.close();
 	
