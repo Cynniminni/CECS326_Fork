@@ -1,2 +1,29 @@
-Hello world! Hello world!
-Hello world! Hello world!
+CECS 326: Programming project
+Objectives: Creation and inheritance of child processes with fork and wait
+Implement a string search software to identify the number of times some given string can 
+be found in a plain text document.
+Software components:
+
+The UI program is the interface with the user. Prompt your user to enter the string to 
+be searched in some document. Here, spawn a child process to perform the search. 
+Allow the child process to finish and output its search result (if any), before 
+prompting the user for the next search string. If the input string is “!wq”, terminate 
+the program.
+To simplify the programming, a lengthy (300 words minimum) plain text 
+document (e.g. your project specifications or excerpt of a Wikipedia article) can be 
+hard coded in the program as a C++ string object (or equivalent). 
+The child process is spawned by the UI process to count the number of times some 
+string appears in a document. On a successful search, output the count and terminate. 
+Injected bug: When a search fails, program your child process to redo and repeat the 
+failed search over and over (indefinitely). This bug would require user's intervention 
+to terminate the child process gracefully via command console (w/o terminating the 
+parent process). To denote its execute, the child process prints a dot (.) prior to each 
+repetition.
+Submit hard copy of your source code with a cover page and needed information 
+(see syllabus). Also, document and submit your test cases which you used to test your 
+program. This can be a very short table that lists each test case, the expected result, and 
+the purpose of each test case. Show your instructor the program execution of your test 
+cases.
+Copy your source file(s) to proj326 directory for grading. Remember to use the 
+proper access permission for your files.
+This project can be completed after the discussion of the sample programs on fork
