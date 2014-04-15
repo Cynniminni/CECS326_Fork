@@ -22,7 +22,7 @@ int main() {
 	cout << "[" << getpid() << "]: Input is case-sensitive. Enter \'!wq\' to exit." << endl;
 
 	while (result > 0) {
-		cout << "[" << getpid() << "]: Please enter string to search:" << endl;
+		cout << "\n[" << getpid() << "]: Please enter string to search:" << endl;
 		cin >> input;
 
 		if (input != "!wq") {
